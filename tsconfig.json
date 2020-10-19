@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "stripInternal": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "resolveJsonModule": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "importHelpers": true,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "rootDir": "src"
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

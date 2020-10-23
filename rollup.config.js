@@ -13,16 +13,8 @@ if (!process.env.NODE_ENV) {
 
 const extensions = [".js", ".ts", ".mjs", ".tsx", ".json"]
 
-/**
- * @return {import("rollup").RollupOptions}
- */
-export default () => ({
-  input: "./src/index.ts",
-  output: {
-    file: "./lib/index.js",
-    format: "esm",
-    banner: "/* eslint-disable */",
-  },
+/** @type {Partial<import("rollup").RollupOptions>} */
+const common = {
   external: id => [/jsx-dom/, /@babel\/runtime/].some(_ => _.test(id)),
   plugins: [
     ts({
@@ -46,4 +38,28 @@ export default () => ({
       semi: true,
     }),
   ].filter(Boolean),
-})
+}
+
+/**
+ * @return {import("rollup").RollupOptions[]}
+ */
+export default () => [
+  {
+    ...common,
+    input: "./src/index.ts",
+    output: {
+      file: "./lib/index.js",
+      format: "esm",
+      banner: "/* eslint-disable */",
+    },
+  },
+  {
+    ...common,
+    input: "./src/polyfill.ts",
+    output: {
+      file: "./lib/polyfill.js",
+      format: "esm",
+      banner: "/* eslint-disable */",
+    },
+  },
+]

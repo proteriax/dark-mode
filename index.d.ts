@@ -1,14 +1,14 @@
-declare const config: {
+interface Config {
+    /** Attribute name for targeting inline style attributes */
     attribute: string;
+    /** Base text color. It can be a CSS variable. */
     textColor: string;
     hooks: {
         /** Returns false to stop processing this rule */
         onCSSStyleRule(style: CSSStyleRule): void | false;
     };
-    replaceMap: {
-        ffffff: string;
-    };
-};
-type Config = typeof config;
+    /** Special cases for these colors. */
+    replaceMap: Record<string, string>;
+}
 declare function start(configs: Partial<Config>): Promise<void>;
-export { config, Config, start };
+export { Config, start };

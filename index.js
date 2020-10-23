@@ -3,6 +3,17 @@ import _classPrivateFieldLooseBase from "@babel/runtime/helpers/classPrivateFiel
 import _classPrivateFieldLooseKey from "@babel/runtime/helpers/classPrivateFieldLooseKey";
 import { createElement } from "jsx-dom/min";
 
+const config = {
+  attribute: "data-css-" + Math.floor(Math.random() * 100),
+  textColor: "#ebebeb",
+  hooks: {
+    onCSSStyleRule() {},
+  },
+  replaceMap: {
+    ffffff: "121212",
+  },
+};
+
 var prefix = "Invariant failed";
 
 function invariant(condition, message) {
@@ -911,16 +922,6 @@ function applyInline() {
   temp.remove();
 }
 
-const config = {
-  attribute: "data-css-" + Math.floor(Math.random() * 100),
-  textColor: "#ebebeb",
-  hooks: {
-    onCSSStyleRule(style) {},
-  },
-  replaceMap: {
-    ffffff: "121212",
-  },
-};
 async function start(configs) {
   Object.assign(config, configs);
   appendNodes();
@@ -941,4 +942,4 @@ async function start(configs) {
   }
 }
 
-export { config, start };
+export { start };

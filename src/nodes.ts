@@ -1,5 +1,5 @@
 import * as React from "jsx-dom/min"
-import { config } from "./index"
+import { config } from "./config"
 import { darkModeMedia } from "./util"
 import { strongMemoize, weakMemoize } from "./util"
 

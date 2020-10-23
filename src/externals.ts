@@ -1,4 +1,4 @@
-import { config } from "."
+import { config } from "./config"
 import { Color } from "./color"
 import { CSSRuleChild, processedRules } from "./nodes"
 import { handleBackground, handleBorder, handleText } from "./util"

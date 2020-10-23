@@ -2,7 +2,7 @@ export const darkModeMedia = "(prefers-color-scheme:dark)"
 export const darkMode = matchMedia(darkModeMedia)
 export const isDarkMode = () => darkMode.matches
 
-import { config } from "."
+import { config } from "./config"
 import { Color } from "./color"
 
 const lightness = "lightness"

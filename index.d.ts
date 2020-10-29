@@ -6,6 +6,10 @@ interface Config {
     hooks: {
         /** Returns false to stop processing this rule */
         onCSSStyleRule(style: CSSStyleRule): void | false;
+        /** Color filter. Return false to skip the node */
+        shouldApplyTextColor(node: HTMLElement): boolean;
+        /** Background filter. Return false to skip the node */
+        shouldApplyBackground(node: HTMLElement): boolean;
     };
     /** Special cases for these colors. */
     replaceMap: Record<string, string>;

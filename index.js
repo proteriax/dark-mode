@@ -856,7 +856,7 @@ const getRealColor = strongMemoize(text => {
   temp.style.color = text;
   return Color.parse(getComputedStyle(temp).color);
 });
-function applyInline() {
+function applyInline(config) {
   var _temp;
 
   (_temp = temp) != null
@@ -867,6 +867,7 @@ function applyInline() {
         },
       }));
   document.body.appendChild(temp);
+  const { hooks } = config;
   const styles = [...document.querySelectorAll("[style]:not([data-css])")];
 
   const match = text => styles.filter(node => node.getAttribute("style").includes(text));
@@ -874,7 +875,11 @@ function applyInline() {
   const matchStrict = prop => styles.filter(node => node.attributeStyleMap.has(prop));
 
   matchStrict("color").forEach(node => {
-    if (!node.style.color) return;
+    if (
+      !node.style.color ||
+      (hooks == null ? void 0 : hooks.shouldApplyTextColor(node)) === false
+    )
+      return;
     const next = handleText(getRealColor(node.style.color));
     getStyleRule(node).style.setProperty("color", next, "important");
   });
@@ -895,7 +900,14 @@ function applyInline() {
   match("background").forEach(node => {
     var _node$textContent;
 
-    if (!/^(th|td|tr|div|span|p|table|caption)$/i.test(node.tagName)) return;
+    if (
+      (hooks == null
+        ? void 0
+        : hooks.shouldApplyBackground == null
+        ? void 0
+        : hooks.shouldApplyBackground(node)) === false
+    )
+      return;
     const key = "backgroundColor";
     const original = node.style[key];
     if (original === "transparent") return;
@@ -925,7 +937,7 @@ function applyInline() {
 async function start(configs) {
   Object.assign(config, configs);
   appendNodes();
-  applyInline();
+  applyInline(config);
 
   if (isDarkMode()) {
     recordExternalColors(true);
@@ -933,7 +945,7 @@ async function start(configs) {
       applyExternals(e.matches);
     });
     new MutationObserver(() => {
-      applyInline();
+      applyInline(config);
       recordExternalColors(isDarkMode());
     }).observe(document.head, {
       childList: true,

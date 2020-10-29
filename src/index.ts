@@ -12,6 +12,10 @@ export interface Config {
   hooks: {
     /** Returns false to stop processing this rule */
     onCSSStyleRule(style: CSSStyleRule): void | false
+    /** Color filter. Return false to skip the node */
+    shouldApplyTextColor(node: HTMLElement): boolean
+    /** Background filter. Return false to skip the node */
+    shouldApplyBackground(node: HTMLElement): boolean
   }
   /** Special cases for these colors. */
   replaceMap: Record<string, string>
@@ -21,7 +25,7 @@ export interface Config {
 export async function start(configs: Partial<Config>) {
   Object.assign(config, configs)
   appendNodes()
-  applyInline()
+  applyInline(config)
 
   if (isDarkMode()) {
     recordExternalColors(true)
@@ -31,7 +35,7 @@ export async function start(configs: Partial<Config>) {
     })
 
     new MutationObserver(() => {
-      applyInline()
+      applyInline(config)
       recordExternalColors(isDarkMode())
     }).observe(document.head, {
       childList: true,

@@ -8,6 +8,7 @@ import {
   handleBorder,
   handleText,
 } from "./util"
+import type { Config } from "./index"
 
 let temp: HTMLSpanElement
 
@@ -19,9 +20,11 @@ const getRealColor = strongMemoize((text: string): Color | undefined => {
   return Color.parse(getComputedStyle(temp).color)
 })
 
-export function applyInline() {
+export function applyInline(config: Config) {
   temp ??= (<span style={{ display: "none" }} />) as any
   document.body.appendChild(temp)
+
+  const { hooks } = config
 
   const styles = [
     ...document.querySelectorAll("[style]:not([data-css])"),
@@ -34,7 +37,7 @@ export function applyInline() {
     styles.filter(node => node.attributeStyleMap.has(prop))
 
   matchStrict("color").forEach(node => {
-    if (!node.style.color) return
+    if (!node.style.color || hooks?.shouldApplyTextColor(node) === false) return
 
     const next = handleText(getRealColor(node.style.color))
     getStyleRule(node).style.setProperty("color", next, "important")
@@ -57,7 +60,7 @@ export function applyInline() {
   })
 
   match("background").forEach(node => {
-    if (!/^(th|td|tr|div|span|p|table|caption)$/i.test(node.tagName)) return
+    if (hooks?.shouldApplyBackground?.(node) === false) return
 
     const key = "backgroundColor"
     const original = node.style[key]

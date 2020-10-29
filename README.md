@@ -22,6 +22,11 @@ start({
   replaceMap: {
     "000000": "121212",
   },
+  hooks: {
+    shouldApplyBackground(node) {
+      return /^(th|td|tr|div|span|p|table|caption|kbd)$/i.test(node.tagName)
+    },
+  },
 })
 ```
 

@@ -877,7 +877,11 @@ function applyInline(config) {
   matchStrict("color").forEach(node => {
     if (
       !node.style.color ||
-      (hooks == null ? void 0 : hooks.shouldApplyTextColor(node)) === false
+      (hooks == null
+        ? void 0
+        : hooks.shouldApplyTextColor == null
+        ? void 0
+        : hooks.shouldApplyTextColor(node)) === false
     )
       return;
     const next = handleText(getRealColor(node.style.color));

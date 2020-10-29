@@ -37,7 +37,7 @@ export function applyInline(config: Config) {
     styles.filter(node => node.attributeStyleMap.has(prop))
 
   matchStrict("color").forEach(node => {
-    if (!node.style.color || hooks?.shouldApplyTextColor(node) === false) return
+    if (!node.style.color || hooks?.shouldApplyTextColor?.(node) === false) return
 
     const next = handleText(getRealColor(node.style.color))
     getStyleRule(node).style.setProperty("color", next, "important")

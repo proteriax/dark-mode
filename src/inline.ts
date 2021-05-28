@@ -7,7 +7,7 @@ import {
   handleBorder,
   handleText,
 } from "./util"
-import type { Config } from "./index"
+import type { DarkModeConfig } from "./index"
 
 let temp: HTMLSpanElement
 
@@ -19,7 +19,7 @@ const getRealColor = strongMemoize((text: string): Color | undefined => {
   return Color.parse(getComputedStyle(temp).color)
 })
 
-export function applyInline(config: Config) {
+export function applyInline(config: DarkModeConfig) {
   if (!temp) {
     temp = document.createElement("span")
     temp.style.display = "none"

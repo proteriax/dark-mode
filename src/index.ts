@@ -4,7 +4,7 @@ import { applyInline } from "./inline"
 import { appendNodes } from "./nodes"
 import { config } from "./config"
 
-export interface Config {
+export interface DarkModeConfig {
   /** Attribute name for targeting inline style attributes */
   attribute: string
   /** Base text color. It can be a CSS variable. */
@@ -21,8 +21,7 @@ export interface Config {
   replaceMap: Record<string, string>
 }
 
-// eslint-disable-next-line @typescript-eslint/no-extra-semi
-export async function start(configs: Partial<Config>) {
+export async function start(configs: Partial<DarkModeConfig>) {
   Object.assign(config, configs)
   appendNodes()
   applyInline(config)

@@ -2,9 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "stripInternal": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
+    "strict": true,
     "resolveJsonModule": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,

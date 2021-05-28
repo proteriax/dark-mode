@@ -2,6 +2,7 @@ import { config } from "./config"
 import { Color } from "./color"
 import { CSSRuleChild, processedRules } from "./nodes"
 import { handleBackground, handleBorder, handleText } from "./util"
+import { DefaultMap } from "./map"
 
 type Instruction = {
   rule: CSSStyleRule
@@ -18,7 +19,15 @@ const replace = <T>(
   map: (value: string) => T | undefined,
   fn: (value: T) => Color | string | undefined
 ) => {
-  const cache = new Map<string, string | undefined>()
+  const cache = new DefaultMap<string, string | undefined>(current => {
+    const mapped = map(current)
+    let edited = mapped && fn(mapped)
+    if (edited instanceof Color) {
+      edited = edited.toStringAsHex()
+    }
+    return edited
+  })
+
   if (Array.isArray(key)) {
     const fns = key.map(key => replace(key, map, fn))
     return (rule: CSSStyleRule, applyNow: boolean): boolean =>
@@ -29,14 +38,6 @@ const replace = <T>(
     if (!rule.styleMap.has(key)) return false
 
     const current = rule.styleMap.get(key)!.toString()
-    if (!cache.has(current)) {
-      const mapped = map(current)
-      let edited = mapped && fn(mapped)
-      if (edited instanceof Color) {
-        edited = edited.toStringAsHex()
-      }
-      cache.set(current, edited)
-    }
     const next = cache.get(current)
     if (next != null) {
       if (applyNow) {

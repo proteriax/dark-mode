@@ -1,11 +1,9 @@
-import { Config } from "./index"
+import { DarkModeConfig } from "./index"
 
-export const config: Config = {
+export const config: DarkModeConfig = {
   attribute: "data-css-" + Math.floor(Math.random() * 100),
   textColor: "#ebebeb",
-  hooks: {
-    onCSSStyleRule() {},
-  },
+  hooks: {},
   replaceMap: {
     ffffff: "121212",
   },

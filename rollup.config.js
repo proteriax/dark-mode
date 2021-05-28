@@ -27,7 +27,10 @@ const common = {
       extensions: extensions.slice(0, -1),
     }),
     replace({
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      preventAssignment: true,
+      values: {
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      },
     }),
     node({ extensions }),
     cjs({ extensions }),

@@ -6,11 +6,7 @@
     "node": true,
     "browser": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/ban-types": "off",
@@ -43,9 +39,6 @@
     "prefer-rest-params": "warn",
     "prefer-spread": "warn",
     "quote-props": ["error", "as-needed"],
-    "react/display-name": "off",
-    "react/no-children-prop": "off",
-    "react/prop-types": "off",
     "spaced-comment": "error",
     "yoda": ["error", "never", { "exceptRange": true }]
   }

@@ -1,4 +1,3 @@
-import * as React from "jsx-dom/min"
 import { getStyleRule } from "./nodes"
 import { Color, literals } from "./color"
 import {
@@ -21,7 +20,10 @@ const getRealColor = strongMemoize((text: string): Color | undefined => {
 })
 
 export function applyInline(config: Config) {
-  temp ??= (<span style={{ display: "none" }} />) as any
+  if (!temp) {
+    temp = document.createElement("span")
+    temp.style.display = "none"
+  }
   document.body.appendChild(temp)
 
   const { hooks } = config

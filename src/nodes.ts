@@ -1,4 +1,3 @@
-import * as React from "jsx-dom/min"
 import { config } from "./config"
 import { darkModeMedia } from "./util"
 import { strongMemoize, weakMemoize } from "./util"
@@ -9,13 +8,9 @@ let inline: Style
 const processed = "data-processed"
 
 export function appendNodes() {
-  external = React.createElement(
-    "style" as const,
-    {
-      media: darkModeMedia,
-      [processed]: "true",
-    } as React.HTMLAttributes<Style>
-  )
+  external = document.createElement("style")
+  external.media = darkModeMedia
+  external.setAttribute(processed, "true")
   inline = external.cloneNode() as Style
   document.documentElement.append(external, inline)
 }
